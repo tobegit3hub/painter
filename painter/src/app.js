@@ -8,93 +8,89 @@ import OperatorComponent from "./operator";
 
 
 
+class ExportButton extends React.Component {
+    constructor(props) {
+        super(props);
 
-
-
-var data = {
-    "nodes": [
-        {"id": "window1", "label": "1", "type": "error"},
-        {"id": "window2", "label": "2"},
-        {"id": "window3", "label": "3"},
-        {"id": "window4", "label": "4"},
-        {"id": "window5", "label": "5"},
-        {"id": "window6", "label": "6"},
-        {"id": "window7", "label": "7"}
-    ],
-    "edges": [
-        {"source": "window1", "target": "window3"},
-        {"source": "window1", "target": "window4"},
-        {"source": "window3", "target": "window5"},
-        {"source": "window5", "target": "window2"},
-        {"source": "window4", "target": "window6"},
-        {"source": "window6", "target": "window2"}
-    ]
-};
-
-
-
-
-class OldOperators extends React.Component {
-    render() {
-        return (
-            <div>
-                <ul>
-                    <li>ReLU</li>
-                    <li>Sigmoid</li>
-                </ul>
-            </div>
-        )
+        this.state = {
+            model_json: "The model to export."
+        };
     }
-}
 
-class OldDag extends React.Component {
-    render() {
-        return (
-            <div>
-                <h3>The dag</h3>
-            </div>
-        )
+    exportModelJson() {
+
+        var data = "Try to export the model json!";
+        //alert(data);
+        console.log(data);
+
+
+        //var allConnection = jsPlumb.getAllConnections();
+        //console.log(allConnection);
+
+        var exported_operator_list = [];
+
+        //var last_
+
+        $.each(jsPlumb.getAllConnections(),function(i, e){
+
+            var allConnection = jsPlumb.getAllConnections();
+
+            console.log(e.endpoints[0].anchor.elementId);
+            console.log(e.endpoints[1].anchor.elementId);
+
+            var start_element_id = e.endpoints[0].anchor.elementId;
+            var end_element_id = e.endpoints[0].anchor.elementId;
+
+            var operatorName = start_element_id.split(":")[0];
+            //console.log(operatorName);
+
+
+            exported_operator_list.push(operatorName);
+
+
+        })
+
+        console.log(exported_operator_list);
+
+
+
+        var exported_model_json = {"class_name": "Sequential", "keras_version": "2.1.2", "config": [{"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_1", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "dtype": "float32", "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 128, "batch_input_shape": [null, 784], "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_1"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_2", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 64, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_2"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_3", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 32, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_3"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_4", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 10, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "softmax", "trainable": true, "name": "activation_4"}}], "backend": "tensorflow"};
+        console.log(exported_model_json);
+
+
+        //alert(model_json);
+        //alert(JSON.stringify(model_json));
+
+
+        //this.setState({operators: this.state.operators});
+        this.setState({model_json: JSON.stringify(exported_model_json)});
+
+        console.log(this.state.model_json);
+
+
     }
-}
-
-class OldAttributes extends React.Component {
-    render() {
-        return (
-            <div>
-                <ul>
-                    <li>Parameter1</li>
-                    <li>Parameter2</li>
-                </ul>
-            </div>
-        )
-    }
-}
 
 
-
-class OldApp extends React.Component {
 
     render() {
         return (
-            <div>
-                <OldOperators />
-                <OldDag />
-                <OldAttributes />
-            </div>
 
+            <div>
+
+            <button type="button" className="btn btn-primary" onClick={this.exportModelJson.bind(this)}>
+                Export Model Json
+            </button>
+
+            <textarea rows="10" cols="35" value={this.state.model_json}>
+
+
+
+            </textarea>
+
+            </div>
         );
     }
 }
-
-/*
-const element = <OldApp />;
-ReactDOM.render(element, document.getElementById('root2'));
-*/
-
-
-
-
-
 
 
 class App extends React.Component {
@@ -102,12 +98,18 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        /*
         this.state = {
             operators: [{
                 name: "LSTM"
             }, {
                 name: "Convolution"
             }]
+        };
+        */
+
+        this.state = {
+            operators: []
         };
 
         /*
@@ -198,6 +200,9 @@ class App extends React.Component {
                             {operatorButtons}
 
                         </div>
+
+
+                        <ExportButton />
                     </div>
 
                     <div className="col-md-6" id="dag_container">
@@ -205,7 +210,7 @@ class App extends React.Component {
                         <h2>Dag</h2>
 
                         <div>
-                            
+
                             {operatorsInDag}
 
                         </div>
@@ -218,12 +223,12 @@ class App extends React.Component {
                         <h2>Attributes</h2>
 
                         <p>Layers</p>
-                        <input type="email" className="form-control" id="inputEmail3" placeholder="10"></input>
+                        <input type="email" className="form-control" id="inputEmail1" placeholder="10"></input>
 
                         <p>Hidden</p>
-                        <input type="email" className="form-control" id="inputEmail3" placeholder="8"></input>
+                        <input type="email" className="form-control" id="inputEmail2" placeholder="8"></input>
 
-                            <p>Activation22</p>
+                            <p>Activation</p>
                         <input type="email" className="form-control" id="inputEmail3" placeholder="Sigmoid"></input>
 
                     </div>
