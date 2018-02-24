@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class OperatorButton extends React.Component {
+export default class OperatorButtonComponent extends React.Component {
     constructor(props) {
         super(props);
 
