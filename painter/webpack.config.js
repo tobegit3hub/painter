@@ -1,6 +1,6 @@
 var config = {
-    //context: __dirname + ".",
-    context: __dirname,
+    context: __dirname + "/src",
+    //context: __dirname,
     entry: "./app.js",
 
     output: {

@@ -2,7 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-console.log("gogogo");
+import OperatorButton from "./operator_button";
+
+
 
 jsPlumb.ready(function() {
     /*
@@ -32,10 +34,12 @@ jsPlumb.ready(function() {
         Anchors : [ "TopCenter", "BottomCenter" ]
     });
 
+    /*
     // TODO: not work
     instance.draggable(jsPlumb.getSelector(".op"), { grid: [20, 20] });
     instance.draggable("op2");
     instance.draggable("op1");
+    */
 
 
     var sourceEndpointOptions = { isSource:true, isTarget:false };
@@ -132,26 +136,6 @@ ReactDOM.render(element, document.getElementById('root2'));
 
 
 
-class OperatorButton extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-
-    }
-
-    render() {
-        return (
-            <div className="operator_button">
-                <button type="button" className="list-group-item">
-                    {this.props.operatorName}
-                </button>
-            </div>
-        );
-    }
-}
-
-
 class Operator extends React.Component {
     constructor(props) {
         super(props);
@@ -161,6 +145,7 @@ class Operator extends React.Component {
     }
 
     render() {
+
         return (
             <div className="op">
                 {this.props.operatorName}
@@ -177,7 +162,6 @@ class Dag extends React.Component {
             operators: []
         };
 
-        this.addOperator = this.addOperator.bind(this);
     }
 
     render() {
@@ -203,23 +187,71 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-
+            operators: [{
+                name: "LSTM"
+            }, {
+                name: "Convolution"
+            }]
         };
 
-        //this.addOperator = this.addOperator.bind(this);
+        /*
+        setTimeout(()=>{
+
+        }, 1000);
+        */
     }
 
     addOperator(opName) {
+        console.log("Call add operator function");
         console.log(opName);
         console.log(this.state.operators.length);
+        console.log(this.state.operators);
 
-        this.setState({operators: []});
+        //this.setState({operators: []});
+
+        const newOperator = {name: opName};
+        this.state.operators.push(newOperator);
+
+        this.setState({operators: this.state.operators});
+
+
+
+         var sourceEndpointOptions = { isSource:true, isTarget:false };
+         var targetEndpointOptions = { isSource:false, isTarget:true };
+
+         jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Top" }, targetEndpointOptions );
+         jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Bottom" }, sourceEndpointOptions );
 
 
     }
 
 
     render() {
+
+
+        /*
+        var operatorButtonsOld = [
+            <OperatorButton key={1} operatorName="ReLU" />,
+            <OperatorButton key={2} operatorName="Sigmoid" />,
+            <OperatorButton key={3} operatorName="FullConnected" />,
+            <OperatorButton key={4} operatorName="Convolution" />,
+            <OperatorButton key={5} operatorName="Recurrent" />
+        ];
+        */
+
+        var operatorButtons = [
+            "ReLU",
+            "Sigmoid",
+            "FullConnected",
+            "Convolution",
+            "Recurrent",
+            "LSTM"
+        ].map((name, index) => <OperatorButton key={index} operatorName={name} addOperator={this.addOperator.bind(this)} />);
+
+
+        var operatorsInDag = this.state.operators.map((operator, index) => <Operator operatorName={operator.name} /> );
+
+
         return(
 
             <div className="container">
@@ -228,13 +260,11 @@ class App extends React.Component {
 
                     <div className="col-md-3">
                         <h2>Operators</h2>
+
                         <div class="list-group">
 
-                            <OperatorButton operatorName="ReLU" />
-                            <OperatorButton operatorName="Sigmoid" />
-                            <OperatorButton operatorName="FullConnected" />
-                            <OperatorButton operatorName="Convolution" />
-                            <OperatorButton operatorName="Recurrent" />
+                            {operatorButtons}
+
                         </div>
                     </div>
 
@@ -246,6 +276,10 @@ class App extends React.Component {
                             <Operator operatorName="Sigmoid"/>
                             <Operator operatorName="ReLU"/>
                             <Operator operatorName="Convolution"/>
+
+
+                            {operatorsInDag}
+
                         </div>
 
 
