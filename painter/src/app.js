@@ -143,6 +143,19 @@ class ExportButton extends React.Component {
 
     }
 
+    saveText(text, filename){
+      var a = document.createElement('a');
+      a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
+      a.setAttribute('download', filename);
+      a.click()
+    }
+
+    downloadJsonFile() {
+        var filename = "model.json";
+        this.saveText( this.state.model_json, filename);
+    }
+
+
     render() {
         return (
 
@@ -151,6 +164,11 @@ class ExportButton extends React.Component {
                 <button type="button" className="btn btn-primary"
                         onClick={this.exportModelJson.bind(this)}>
                     Export Model Json
+                </button>
+
+                <button type="button" className="btn btn-info"
+                        onClick={this.downloadJsonFile.bind(this)}>
+                    Download
                 </button>
 
                 <textarea rows="10" cols="35" value={this.state.model_json}>
