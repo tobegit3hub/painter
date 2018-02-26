@@ -1,12 +1,8 @@
-
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 import OperatorButtonComponent from "./operator_button";
-
 import OperatorComponent from "./operator";
-
-
 
 class ExportButton extends React.Component {
     constructor(props) {
@@ -18,70 +14,146 @@ class ExportButton extends React.Component {
     }
 
     exportModelJson() {
-
         var data = "Try to export the model json!";
-        //alert(data);
         console.log(data);
-
-
-        //var allConnection = jsPlumb.getAllConnections();
-        //console.log(allConnection);
 
         var exported_operator_list = [];
 
         //var last_
 
-        $.each(jsPlumb.getAllConnections(),function(i, e){
+        $.each(jsPlumb.getAllConnections(), function (i, e) {
 
             var allConnection = jsPlumb.getAllConnections();
 
             console.log(e.endpoints[0].anchor.elementId);
             console.log(e.endpoints[1].anchor.elementId);
 
-            var start_element_id = e.endpoints[0].anchor.elementId;
-            var end_element_id = e.endpoints[0].anchor.elementId;
+            var startElementId = e.endpoints[0].anchor.elementId;
+            var endElementId = e.endpoints[1].anchor.elementId;
 
-            var operatorName = start_element_id.split(":")[0];
+            var startOperatorName = startElementId.split(":")[0];
+            var endOperatorName = endElementId.split(":")[0];
             //console.log(operatorName);
 
+            if (exported_operator_list.length == 0) {
+                exported_operator_list.push(startOperatorName);
+            }
 
-            exported_operator_list.push(operatorName);
-
+            exported_operator_list.push(endOperatorName);
 
         })
 
         console.log(exported_operator_list);
 
+        //var exported_model_json = {"class_name": "Sequential", "keras_version": "2.1.2", "config": [{"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_1", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "dtype": "float32", "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 128, "batch_input_shape": [null, 784], "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_1"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_2", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 64, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_2"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_3", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 32, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_3"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_4", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 10, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "softmax", "trainable": true, "name": "activation_4"}}], "backend": "tensorflow"};
+        //console.log(exported_model_json);
 
+        var exportedModelJson = {
+            "class_name": "Sequential",
+            "keras_version": "2.1.2",
+            "config": [],
+            "backend": "tensorflow"
+        };
 
-        var exported_model_json = {"class_name": "Sequential", "keras_version": "2.1.2", "config": [{"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_1", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "dtype": "float32", "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 128, "batch_input_shape": [null, 784], "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_1"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_2", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 64, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_2"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_3", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 32, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "relu", "trainable": true, "name": "activation_3"}}, {"class_name": "Dense", "config": {"kernel_initializer": {"class_name": "VarianceScaling", "config": {"distribution": "uniform", "scale": 1.0, "seed": null, "mode": "fan_avg"}}, "name": "dense_4", "kernel_constraint": null, "bias_regularizer": null, "bias_constraint": null, "activation": "linear", "trainable": true, "kernel_regularizer": null, "bias_initializer": {"class_name": "Zeros", "config": {}}, "units": 10, "use_bias": true, "activity_regularizer": null}}, {"class_name": "Activation", "config": {"activation": "softmax", "trainable": true, "name": "activation_4"}}], "backend": "tensorflow"};
-        console.log(exported_model_json);
+        for (var i = 0; i < exported_operator_list.length; i++) {
+            console.log(exported_operator_list);
 
+            var operatorName = exported_operator_list[i];
+            console.log(operatorName);
 
-        //alert(model_json);
-        //alert(JSON.stringify(model_json));
+            var layerJson = null;
 
+            if (operatorName === "Dense") {
+                layerJson = {
+                    "class_name": "Dense",
+                    "config": {
+                        "kernel_initializer": {
+                            "class_name": "VarianceScaling",
+                            "config": {
+                                "distribution": "uniform",
+                                "scale": 1.0,
+                                "seed": null,
+                                "mode": "fan_avg"
+                            }
+                        },
+                        "name": "dense_2",
+                        "kernel_constraint": null,
+                        "bias_regularizer": null,
+                        "bias_constraint": null,
+                        "activation": "linear",
+                        "trainable": true,
+                        "kernel_regularizer": null,
+                        "bias_initializer": {
+                            "class_name": "Zeros",
+                            "config": {}
+                        },
+                        "units": 64,
+                        "use_bias": true,
+                        "activity_regularizer": null
+                    }
+                };
+            } else if (operatorName === "Softmax") {
+                layerJson = {
+                    "class_name": "Activation",
+                    "config": {
+                        "activation": "softmax",
+                        "trainable": true,
+                        "name": "activation_4"
+                    }
+                };
+            } else if (operatorName === "Relu") {
+                layerJson = {
+                    "class_name": "Activation",
+                    "config": {
+                        "activation": "relu",
+                        "trainable": true,
+                        "name": "activation_3"
+                    }
+                };
+            } else if (operatorName === "foo") {
+                layerJson = {
+                    "class_name": "Activation",
+                    "config": {
+                        "activation": "softmax",
+                        "trainable": true,
+                        "name": "activation_4"
+                    }
+                };
+            } else if (operatorName === "bar") {
+                layerJson = {
+                    "class_name": "Activation",
+                    "config": {
+                        "activation": "softmax",
+                        "trainable": true,
+                        "name": "activation_4"
+                    }
+                };
+            } else {
+                console.log("Error, unknown operator name");
+            }
+
+            exportedModelJson["config"].push(layerJson);
+
+        }
 
         //this.setState({operators: this.state.operators});
-        this.setState({model_json: JSON.stringify(exported_model_json)});
+        this.setState({model_json: JSON.stringify(exportedModelJson)});
 
         console.log(this.state.model_json);
 
-
     }
-
-
 
     render() {
         return (
 
             <div>
 
-            <button type="button" className="btn btn-primary" onClick={this.exportModelJson.bind(this)}>
-                Export Model Json
-            </button>
+                <button type="button" className="btn btn-primary"
+                        onClick={this.exportModelJson.bind(this)}>
+                    Export Model Json
+                </button>
 
-            <textarea rows="10" cols="35" value={this.state.model_json}>
+                <textarea rows="10" cols="35" value={this.state.model_json}>
 
 
 
@@ -92,31 +164,30 @@ class ExportButton extends React.Component {
     }
 }
 
-
 class App extends React.Component {
 
     constructor(props) {
         super(props);
 
         /*
-        this.state = {
-            operators: [{
-                name: "LSTM"
-            }, {
-                name: "Convolution"
-            }]
-        };
-        */
+         this.state = {
+         operators: [{
+         name: "LSTM"
+         }, {
+         name: "Convolution"
+         }]
+         };
+         */
 
         this.state = {
             operators: []
         };
 
         /*
-        setTimeout(()=>{
+         setTimeout(()=>{
 
-        }, 1000);
-        */
+         }, 1000);
+         */
     }
 
     addOperator(opName) {
@@ -132,61 +203,62 @@ class App extends React.Component {
 
         this.setState({operators: this.state.operators});
 
+        var sourceEndpointOptions = {isSource: true, isTarget: false};
+        var targetEndpointOptions = {isSource: false, isTarget: true};
 
-
-         var sourceEndpointOptions = { isSource:true, isTarget:false };
-         var targetEndpointOptions = { isSource:false, isTarget:true };
-
-         /*
+        /*
          jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Top" }, targetEndpointOptions );
          jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Bottom" }, sourceEndpointOptions );
 
 
-        jsPlumb.draggable(jsPlumb.getSelector(".op"), { grid: [20, 20] });
-        */
+         jsPlumb.draggable(jsPlumb.getSelector(".op"), { grid: [20, 20] });
+         */
 
+        // TODO: Remove this if it runs for all elements
+        setTimeout(() => {
+            console.log("one second later");
 
-         // TODO: Remove this if it runs for all elements
-         setTimeout(()=>{
-             console.log("one second later");
+            jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), {anchor: "Top"},
+                targetEndpointOptions);
+            jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), {anchor: "Bottom"},
+                sourceEndpointOptions);
 
-             jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Top" }, targetEndpointOptions );
-             jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Bottom" }, sourceEndpointOptions );
-
-
-             jsPlumb.draggable(jsPlumb.getSelector(".op"), { grid: [20, 20] });
-         }, 100);
+            jsPlumb.draggable(jsPlumb.getSelector(".op"), {grid: [20, 20]});
+        }, 100);
 
     }
-
 
     render() {
 
 
         /*
-        var operatorButtonsOld = [
-            <OperatorButton key={1} operatorName="ReLU" />,
-            <OperatorButton key={2} operatorName="Sigmoid" />,
-            <OperatorButton key={3} operatorName="FullConnected" />,
-            <OperatorButton key={4} operatorName="Convolution" />,
-            <OperatorButton key={5} operatorName="Recurrent" />
-        ];
-        */
+         var operatorButtonsOld = [
+         <OperatorButton key={1} operatorName="ReLU" />,
+         <OperatorButton key={2} operatorName="Sigmoid" />,
+         <OperatorButton key={3} operatorName="FullConnected" />,
+         <OperatorButton key={4} operatorName="Convolution" />,
+         <OperatorButton key={5} operatorName="Recurrent" />
+         ];
+         */
 
         var operatorButtons = [
-            "ReLU",
+            "Dense",
             "Sigmoid",
-            "FullConnected",
+            "Softmax",
+            "Relu",
             "Convolution",
             "Recurrent",
             "LSTM"
-        ].map((name, index) => <OperatorButtonComponent key={index} operatorName={name} addOperator={this.addOperator.bind(this)} />);
+        ].map((name, index) => <OperatorButtonComponent key={index}
+                                                        operatorName={name}
+                                                        addOperator={this.addOperator.bind(
+                                                            this)}/>);
 
+        var operatorsInDag = this.state.operators.map(
+            (operator, index) => <OperatorComponent
+                operatorName={operator.name}/>);
 
-        var operatorsInDag = this.state.operators.map((operator, index) => <OperatorComponent operatorName={operator.name} /> );
-
-
-        return(
+        return (
 
             <div className="container">
 
@@ -223,13 +295,16 @@ class App extends React.Component {
                         <h2>Attributes</h2>
 
                         <p>Layers</p>
-                        <input type="email" className="form-control" id="inputEmail1" placeholder="10"></input>
+                        <input type="email" className="form-control"
+                               id="inputEmail1" placeholder="10"></input>
 
                         <p>Hidden</p>
-                        <input type="email" className="form-control" id="inputEmail2" placeholder="8"></input>
+                        <input type="email" className="form-control"
+                               id="inputEmail2" placeholder="8"></input>
 
-                            <p>Activation</p>
-                        <input type="email" className="form-control" id="inputEmail3" placeholder="Sigmoid"></input>
+                        <p>Activation</p>
+                        <input type="email" className="form-control"
+                               id="inputEmail3" placeholder="Sigmoid"></input>
 
                     </div>
 
@@ -240,20 +315,11 @@ class App extends React.Component {
     }
 }
 
-
-
-
 const element11 = <App />;
 
 ReactDOM.render(element11, document.getElementById('root'));
 
-
-
-
-
-
-
-jsPlumb.ready(function() {
+jsPlumb.ready(function () {
     /*
      var common = {
      connector: ["Straight"],
@@ -272,7 +338,6 @@ jsPlumb.ready(function() {
      }, common);
      */
 
-
     //jsPlumb.setContainer(document.getElementById("dag_container"));
 
     //var instance = jsPlumb.getInstance();
@@ -285,24 +350,28 @@ jsPlumb.ready(function() {
     //instance = jsPlumb.getInstance();
     var instance = window.jsp = jsPlumb.getInstance({
         // default drag options
-        DragOptions: { cursor: 'pointer', zIndex: 2000 },
+        DragOptions: {cursor: 'pointer', zIndex: 2000},
         // the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in this
         // case it returns the 'labelText' member that we set on each connection in the 'init' method below.
         ConnectionOverlays: [
-            [ "Arrow", {
+            ["Arrow", {
                 location: 1,
-                visible:true,
-                id:"ARROW",
-                events:{
-                    click:function() { alert("you clicked on the arrow overlay")}
+                visible: true,
+                id: "ARROW",
+                events: {
+                    click: function () {
+                        alert("you clicked on the arrow overlay")
+                    }
                 }
-            } ],
-            [ "Label", {
+            }],
+            ["Label", {
                 location: 0.1,
                 id: "label",
                 cssClass: "aLabel",
-                events:{
-                    tap:function() { alert("You 'tap'ed an a label"); }
+                events: {
+                    tap: function () {
+                        alert("You 'tap'ed an a label");
+                    }
                 }
             }]
         ],
@@ -311,19 +380,17 @@ jsPlumb.ready(function() {
 
     var basicType = {
         connector: "StateMachine",
-        paintStyle: { strokeStyle: "red", lineWidth: 4 },
-        hoverPaintStyle: { strokeStyle: "blue" },
+        paintStyle: {strokeStyle: "red", lineWidth: 4},
+        hoverPaintStyle: {strokeStyle: "blue"},
         overlays: [
             "Arrow"
         ]
     };
     instance.registerConnectionType("basic", basicType);
 
-
-
     instance.importDefaults({
-        Connector : [ "Bezier", { curviness: 150 } ],
-        Anchors : [ "TopCenter", "BottomCenter" ]
+        Connector: ["Bezier", {curviness: 150}],
+        Anchors: ["TopCenter", "BottomCenter"]
     });
 
     /*
@@ -341,15 +408,13 @@ jsPlumb.ready(function() {
      instance.draggable(jsPlumb.getSelector(".op"), { grid: [20, 20] });
      */
 
+    var sourceEndpointOptions = {isSource: true, isTarget: false};
+    var targetEndpointOptions = {isSource: false, isTarget: true};
 
-    var sourceEndpointOptions = { isSource:true, isTarget:false };
-    var targetEndpointOptions = { isSource:false, isTarget:true };
-
-    jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Top" }, targetEndpointOptions );
-    jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), { anchor:"Bottom" }, sourceEndpointOptions );
-
-
-
+    jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), {anchor: "Top"},
+        targetEndpointOptions);
+    jsPlumb.addEndpoint(jsPlumb.getSelector(".op"), {anchor: "Bottom"},
+        sourceEndpointOptions);
 
 });
 

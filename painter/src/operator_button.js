@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from "react";
 
 export default class OperatorButtonComponent extends React.Component {
     constructor(props) {
@@ -9,11 +8,12 @@ export default class OperatorButtonComponent extends React.Component {
 
     }
 
-
     render() {
         return (
             <div className="operator_button">
-                <button type="button" className="list-group-item" onClick={() => this.props.addOperator(this.props.operatorName)}>
+                <button type="button" className="list-group-item"
+                        onClick={() => this.props.addOperator(
+                            this.props.operatorName)}>
 
 
                     {this.props.operatorName}

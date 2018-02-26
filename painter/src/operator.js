@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from "react";
 
 export default class OperatorComponent extends React.Component {
     constructor(props) {
