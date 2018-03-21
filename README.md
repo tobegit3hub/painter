@@ -1,2 +1,7 @@
-# painter
-The painter service to construct machine learning models easily
+# Painter
+
+## Introduction
+
+The painter service to construct machine learning models easily.
+
+![](./screenshot.jpg)
